@@ -1,0 +1,96 @@
+---
+- hosts: cbtgx.sanbi.ac.za
+  vars:
+  - admin_ssh_key: "{{ lookup('file', '/home/zipho/.ssh/id_rsa.pub') }}"
+  - hostname: cbtgx.sanbi.ac.za
+  - ldap_base: dc=sanbi,dc=ac,dc=za
+  - ldap_uri: ldap://ldap.sanbi.ac.za
+  - ldap_filter: active=TRUE
+  - kerberos_realm: SANBI
+  - kerberos_server: auth.sanbi.ac.za
+  - galaxy_server_dir: /opt/cbtgx/galaxy
+  - galaxy_config_dir: "{{ galaxy_server_dir }}/config"
+  - galaxy_mutable_config_dir: "{{ galaxy_server_dir }}/config"
+  - galaxy_home_dir: "{{ galaxy_server_dir }}"
+  - galaxy_venv_dir: "{{ galaxy_server_dir }}/.venv"
+  - galaxy_root: "{{ galaxy_server_dir }}"
+  - galaxy_vcs: git
+  - galaxy_changeset_id: dev
+  - galaxy_user_name: galaxy
+  - galaxy_user_uid: 1097
+  - galaxy_user_gid: 1047
+  - galaxy_handler_env: "SGE_ROOT=/var/lib/gridengine"
+  - galaxy_slurm_drm: false # we use SGE, not SLURM
+  - postgresql_objects_users:
+      - name: galaxy
+        password: null
+  - postgresql_objects_databases:
+      - name: galaxy
+        owner: galaxy
+  - galaxy_config:
+      "app:main":
+        database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
+        admin_users: pvh@sanbi.ac.za,zipho@sanbi.ac.za,thoba@sanbi.ac.za
+        #dynamic_proxy_external_proxy: True
+        #dynamic_proxy_prefix: gie_proxy
+        library_import_dir: /opt/cbtgx/admin_import
+        tool_dependency_dir: /opt/cbtgx/shed_tools
+        debug: true
+        nginx_x_accel_redirect_base: /_x_accel_redirect
+        ftp_upload_dir: /opt/cbtgx/incoming
+        ftp_upload_site: ftp://put.your.data.on/opt/cbtgx/username@sanbi.ac.za
+        dynamic_proxy_external_proxy: True
+        dynamic_proxy_prefix: gie_proxy
+        interactive_environment_plugins_directory: config/plugins/interactive_environments
+      "uwsgi":
+        stats: 127.0.0.1:9191
+        socket: 127.0.0.1:4001
+        pythonpath: lib
+        master: True
+      "server:handler0":
+        use: egg:Paste#http
+        port: 8090
+        host: 127.0.0.1
+        use_threadpool: true
+        threadpool_workers: 5        
+      "server:handler1":
+        use: egg:Paste#http
+        port: 8091
+        host: 127.0.0.1
+        use_threadpool: true
+        threadpool_workers: 5        
+
+  - galaxy_extras_config_nginx: true
+  - galaxy_extras_config_proftpd: false
+  - galaxy_extras_config_slurm: false
+  - galaxy_extras_config_supervisor: true
+  - galaxy_extras_config_galaxy_root: false
+  - galaxy_extras_config_galaxy_job_metrics: false
+  - galaxy_extras_config_uwsgi: true
+  - galaxy_extras_config_ie_proxy: false
+  - galaxy_extras_config_scripts: true
+  - galaxy_extras_config_startup: false
+  - supervisor_manage_slurm: false
+  - supervisor_manage_proftp: false
+  - supervisor_manage_ie_proxy: false
+  - supervisor_postgres_options: "-D /etc/postgresql/9.3/main"
+  - galaxy_uwsgi_static_conf: true # set number of threads and processes statically in supervisor config
+  - nginx_ssl: true
+  - nginx_ssl_cert_file: /home/zipho/Documents/SANBI/CERTS/sanbi.pem
+  - nginx_ssl_key_file: /home/zipho/Documents/SANBI/CERTS/sanbi.key
+
+  roles:
+  # SANBI basic-server role: https://github.com/pvanheus/sanbi-basic-server
+  - { role: sanbi-basic-server, tags: sanbi-basic-server }
+  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy-os
+  - { role: ansible-galaxy-os, tags: ansible-galaxy-os }
+  # Nate (natefoo) https://github.com/natefoo/ansible-postgresql-objects
+  - { role: ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy }
+  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy
+  - { role: ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}" }
+  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy-extras
+  - { role: ansible-galaxy-extras, tags: galaxy }
+  # SANBI role https://github.com/pvanheus/ansible-galaxy-pam-auth-sanbi
+  - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
+  # SANBI role https://github.com/pvanheus/ansible-galaxy-envmodules-sanbi-
+  - { role: ansible-galaxy-envmodules-sanbi, tags: galaxy } 
