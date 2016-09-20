@@ -8,7 +8,12 @@
   - ldap_filter: active=TRUE
   - kerberos_realm: SANBI
   - kerberos_server: auth.sanbi.ac.za
-  - galaxy_server_dir: /opt/cbtgx/galaxy
+  - automount_links:
+      cip0:
+        { src: "/net/datasrv3hs.sanbi.ac.za/datastore/cip0", dest: "/cip0" }
+      people:
+        { src: "/net/datasrv3hs.sanbi.ac.za/datastore/data12/people", dest: "/usr/people" }
+  - galaxy_server_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/galaxy
   - galaxy_config_dir: "{{ galaxy_server_dir }}/config"
   - galaxy_mutable_config_dir: "{{ galaxy_server_dir }}/config"
   - galaxy_home_dir: "{{ galaxy_server_dir }}"
@@ -33,12 +38,12 @@
         admin_users: pvh@sanbi.ac.za,zipho@sanbi.ac.za,thoba@sanbi.ac.za
         #dynamic_proxy_external_proxy: True
         #dynamic_proxy_prefix: gie_proxy
-        library_import_dir: /opt/cbtgx/admin_import
-        tool_dependency_dir: /opt/cbtgx/shed_tools
+        library_import_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/admin_import
+        tool_dependency_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/shed_tools
         debug: true
         nginx_x_accel_redirect_base: /_x_accel_redirect
-        ftp_upload_dir: /opt/cbtgx/incoming
-        ftp_upload_site: ftp://put.your.data.on/opt/cbtgx/username@sanbi.ac.za
+        ftp_upload_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/incoming
+        ftp_upload_site: ftp://put.your.data.on/cip0/software/galaxy/cbtgalaxydev/cbtgx/username@sanbi.ac.za
         dynamic_proxy_external_proxy: True
         dynamic_proxy_prefix: gie_proxy
         interactive_environment_plugins_directory: config/plugins/interactive_environments
@@ -73,14 +78,14 @@
   - supervisor_manage_slurm: false
   - supervisor_manage_proftp: false
   - supervisor_manage_ie_proxy: false
-  - supervisor_postgres_options: "-D /etc/postgresql/9.3/main"
+  - supervisor_postgres_options: "-D /etc/postgresql/9.5/main"
   - galaxy_uwsgi_static_conf: true # set number of threads and processes statically in supervisor config
   - nginx_ssl: true
-  - nginx_ssl_cert_file: /home/zipho/Documents/SANBI/CERTS/sanbi.pem
-  - nginx_ssl_key_file: /home/zipho/Documents/SANBI/CERTS/sanbi.key
+  - nginx_ssl_cert_file: /home/zipho/certs/sanbissl/sanbi.pem
+  - nginx_ssl_key_file: /home/zipho/certs/sanbissl/sanbi.key
 
   roles:
-  # SANBI basic-server role: https://github.com/pvanheus/sanbi-basic-server
+  # SANBI basic-server role: https://github.com/SANBI-SA/sanbi-basic-server
   - { role: sanbi-basic-server, tags: sanbi-basic-server }
   # Galaxy Project https://github.com/galaxyproject/ansible-galaxy-os
   - { role: ansible-galaxy-os, tags: ansible-galaxy-os }
@@ -93,4 +98,6 @@
   # SANBI role https://github.com/pvanheus/ansible-galaxy-pam-auth-sanbi
   - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
   # SANBI role https://github.com/pvanheus/ansible-galaxy-envmodules-sanbi-
-  - { role: ansible-galaxy-envmodules-sanbi, tags: galaxy } 
+  - { role: ansible-galaxy-envmodules-sanbi-, tags: galaxy }
+  # An Ansible role for automated installation of tools from a Tool Shed into Galaxy.: git@github.com:galaxyproject/ansible-galaxy-tools.git
+  #- { role: ansible-galaxy-tools, tags: galaxy }
