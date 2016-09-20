@@ -93,7 +93,7 @@
   - { role: ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy }
   # Galaxy Project https://github.com/galaxyproject/ansible-galaxy
   - { role: ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}" }
-  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy-extras
+  # SANBI Galaxy Project Fork https://github.com/SANBI-SA/ansible-galaxy-extras
   - { role: ansible-galaxy-extras, tags: galaxy }
   # SANBI role https://github.com/pvanheus/ansible-galaxy-pam-auth-sanbi
   - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
