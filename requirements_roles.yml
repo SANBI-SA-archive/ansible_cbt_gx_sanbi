@@ -1,14 +1,14 @@
 - src: https://github.com/SANBI-SA/sanbi-basic-server
   name: sanbi-basic-server
-- src: git@github.com:SANBI-SA/ansible-galaxy-os.git
+- src: https://github.com/SANBI-SA/ansible-galaxy-os
   name: ansible-galaxy-os
-- src: git@github.com:SANBI-SA/ansible-postgresql-objects.git
+- src: https://github.com/SANBI-SA/ansible-postgresql-objects.git
   name: ansible-postgresql-objects
-- src: git@github.com:SANBI-SA/ansible-galaxy.git
+- src: https://github.com/SANBI-SA/ansible-galaxy.git
   name: ansible-galaxy
-- src: git@github.com:SANBI-SA/ansible-galaxy-extras.git
+- src: https://github.com/SANBI-SA/ansible-galaxy-extras.git
   name: ansible-galaxy-extras
-- src: git@github.com:SANBI-SA/ansible-galaxy-pam-auth-sanbi.git
+- src: https://github.com/SANBI-SA/ansible-galaxy-pam-auth-sanbi.git
   name: ansible-galaxy-pam-auth-sanbi
-- src: git@github.com:SANBI-SA/ansible-galaxy-envmodules-sanbi-.git
+- src: https://github.com/SANBI-SA/ansible-galaxy-envmodules-sanbi-.git
   name: ansible-galaxy-envmodules-sanbi-
