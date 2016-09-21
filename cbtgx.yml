@@ -57,13 +57,13 @@
         port: 8090
         host: 127.0.0.1
         use_threadpool: true
-        threadpool_workers: 5        
+        threadpool_workers: 5
       "server:handler1":
         use: egg:Paste#http
         port: 8091
         host: 127.0.0.1
         use_threadpool: true
-        threadpool_workers: 5        
+        threadpool_workers: 5
 
   - galaxy_extras_config_nginx: true
   - galaxy_extras_config_proftpd: false
@@ -85,19 +85,10 @@
   - nginx_ssl_key_file: /home/zipho/certs/sanbissl/sanbi.key
 
   roles:
-  # SANBI basic-server role: https://github.com/SANBI-SA/sanbi-basic-server
-  - { role: sanbi-basic-server, tags: sanbi-basic-server }
-  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy-os
-  - { role: ansible-galaxy-os, tags: ansible-galaxy-os }
-  # Nate (natefoo) https://github.com/natefoo/ansible-postgresql-objects
-  - { role: ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy }
-  # Galaxy Project https://github.com/galaxyproject/ansible-galaxy
-  - { role: ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}" }
-  # SANBI Galaxy Project Fork https://github.com/SANBI-SA/ansible-galaxy-extras
-  - { role: ansible-galaxy-extras, tags: galaxy }
-  # SANBI role https://github.com/pvanheus/ansible-galaxy-pam-auth-sanbi
-  - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
-  # SANBI role https://github.com/pvanheus/ansible-galaxy-envmodules-sanbi-
-  - { role: ansible-galaxy-envmodules-sanbi-, tags: galaxy }
-  # An Ansible role for automated installation of tools from a Tool Shed into Galaxy.: git@github.com:galaxyproject/ansible-galaxy-tools.git
-  #- { role: ansible-galaxy-tools, tags: galaxy }
+    - sanbi-basic-server, tags: sanbi-basic-server
+    - ansible-galaxy-os, tags: ansible-galaxy-os
+    - ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy
+    - ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}"
+    - ansible-galaxy-extras, tags: galaxy
+    - ansible-galaxy-pam-auth-sanbi, tags: galaxy
+    - ansible-galaxy-envmodules-sanbi-, tags: galaxy
