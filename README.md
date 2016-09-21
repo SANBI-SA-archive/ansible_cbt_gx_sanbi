@@ -1,4 +1,4 @@
-# Galaxy Ansible Playbook for Combat TB
+# Galaxy Ansible Playbook for local SANBI Installations
 A ready-to-use Ansible playbook for the SANBI Galaxy Installation.
 
 Before you can use this playbook, you need to install [Ansible][ans] (version
