@@ -85,10 +85,10 @@
   - nginx_ssl_key_file: /home/zipho/certs/sanbissl/sanbi.key
 
   roles:
-    - sanbi-basic-server, tags: sanbi-basic-server
-    - ansible-galaxy-os, tags: ansible-galaxy-os
-    - ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy
-    - ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}"
-    - ansible-galaxy-extras, tags: galaxy
-    - ansible-galaxy-pam-auth-sanbi, tags: galaxy
-    - ansible-galaxy-envmodules-sanbi-, tags: galaxy
+    - { role: sanbi-basic-server, tags: sanbi-basic-server }
+    - { role: ansible-galaxy-os, tags: ansible-galaxy-os }
+    - { role: ansible-postgresql-objects, become: yes, become_user: postgres, tags: galaxy}
+    - { role: ansible-galaxy, tags: galaxy, become: yes, become_user: "{{ galaxy_user_name | default('galaxy') }}"}
+    - { role: ansible-galaxy-extras, tags: galaxy-extras }
+    - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
+    - { role: ansible-galaxy-envmodules-sanbi-, tags: galaxy }
