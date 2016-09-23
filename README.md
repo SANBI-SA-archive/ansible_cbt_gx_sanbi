@@ -14,6 +14,7 @@ To use, clone this repo and provide a locally. Then, run the playbook:
 
     $ git clone git@github.com:SANBI-SA/ansible_cbt_gx_sanbi.git
     $ cd ansible_cbt_gx_sanbi && ansible-galaxy install -f -r requirements_roles.yml -p roles
+    $ ansible-playbook -u root -k cbtgx.yml
 
 The default settings will run the playbook for an installation of SANBI Galaxy in http://cbtgx.sanbi.ac.za. To target a different instance of Galaxy, edit `cbtgx.yml` and set host URL to your prefered Galaxy instance. 
 
