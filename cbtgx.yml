@@ -36,8 +36,8 @@
       "app:main":
         database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
         admin_users: pvh@sanbi.ac.za,zipho@sanbi.ac.za,thoba@sanbi.ac.za
-        #dynamic_proxy_external_proxy: True
-        #dynamic_proxy_prefix: gie_proxy
+        dynamic_proxy_external_proxy: True
+        dynamic_proxy_prefix: gie_proxy
         library_import_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/admin_import
         tool_dependency_dir: /cip0/software/galaxy/cbtgalaxydev/cbtgx/shed_tools
         debug: true
@@ -47,6 +47,7 @@
         dynamic_proxy_external_proxy: True
         dynamic_proxy_prefix: gie_proxy
         interactive_environment_plugins_directory: config/plugins/interactive_environments
+        conda_prefix: "/cip0/software/conda"
       "uwsgi":
         stats: 127.0.0.1:9191
         socket: 127.0.0.1:4001
