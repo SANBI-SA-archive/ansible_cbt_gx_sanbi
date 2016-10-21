@@ -1,8 +1,8 @@
 ---
-- hosts: cbtgx.sanbi.ac.za
+- hosts: ctbgx.sanbi.ac.za
   vars:
   - admin_ssh_key: "{{ lookup('file', '/home/zipho/.ssh/id_rsa.pub') }}"
-  - hostname: cbtgx.sanbi.ac.za
+  - hostname: ctbgx.sanbi.ac.za
   - ldap_base: dc=sanbi,dc=ac,dc=za
   - ldap_uri: ldap://ldap.sanbi.ac.za
   - ldap_filter: active=TRUE
@@ -93,3 +93,4 @@
     - { role: ansible-galaxy-extras, tags: galaxy-extras }
     - { role: ansible-galaxy-pam-auth-sanbi, tags: galaxy }
     - { role: ansible-galaxy-envmodules-sanbi-, tags: galaxy }
+    - { role: ansible-galaxy-sge-sanbi, tags: galaxy }

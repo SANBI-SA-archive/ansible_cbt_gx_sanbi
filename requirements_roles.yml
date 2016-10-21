@@ -12,3 +12,5 @@
   name: ansible-galaxy-pam-auth-sanbi
 - src: https://github.com/SANBI-SA/ansible-galaxy-envmodules-sanbi-.git
   name: ansible-galaxy-envmodules-sanbi-
+- src: https://github.com/SANBI-SA/ansible-galaxy-sge-sanbi.git
+  name: ansible-galaxy-sge-sanbi
